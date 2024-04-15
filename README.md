@@ -1,5 +1,26 @@
 # SoftwareIII
-Repositorio de Recursos para el Curso de Java y Desarrollo de Software
+
+##Resources
+
+This repository is designed to provide students with a wide range of resources related to the Java and software development course. Here they will find files, data, and reference material for the classes taught, covering the following topics:
+
+Definition of Inheritance: Exploration of the fundamental concepts of inheritance in object-oriented programming.
+Effects of Modifiers in Inheritance: Understanding how modifiers affect inheritance and the visibility of class members.
+Base Class Object: In-depth study of the base class Object in Java and its role in the class hierarchy.
+Abstract Classes: Use and application of abstract classes to define common behaviors.
+Interfaces in Java: Concepts and practices related to the use of interfaces to achieve abstraction and modularity.
+Software Architecture: Exploration of principles and design patterns in software architecture.
+Angular and Ionic: Introduction to the Angular and Ionic frameworks for web and mobile application development.
+Inheritance and Polymorphism: Deep dive into the concepts of inheritance and polymorphism, pillars of object-oriented programming.
+Definition and Manipulation of Files: File handling in Java, including reading, writing, and manipulation operations.
+Definition of Collection: Study of collection data structures in Java and their applications.
+Introduction to Databases: Basic concepts about databases and their integration with Java applications.
+This repository will be kept updated with new materials and examples throughout the course to enrich the students' learning experience.
+
+Welcome and enjoy learning!
+
+
+##Recursos
 
 Este repositorio está diseñado para proporcionar a los estudiantes una amplia gama de recursos relacionados con el curso de Java y desarrollo de software. Aquí encontrarán archivos, datos, y material de referencia para las clases impartidas, abordando los siguientes temas:
 
