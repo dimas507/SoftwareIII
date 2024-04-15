@@ -1,6 +1,6 @@
 # SoftwareIII
 
-##Resources
+## Resources
 
 This repository is designed to provide students with a wide range of resources related to the Java and software development course. Here they will find files, data, and reference material for the classes taught, covering the following topics:
 
@@ -20,7 +20,7 @@ This repository will be kept updated with new materials and examples throughout 
 Welcome and enjoy learning!
 
 
-##Recursos
+## Recursos
 
 Este repositorio está diseñado para proporcionar a los estudiantes una amplia gama de recursos relacionados con el curso de Java y desarrollo de software. Aquí encontrarán archivos, datos, y material de referencia para las clases impartidas, abordando los siguientes temas:
 
