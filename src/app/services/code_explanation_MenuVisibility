@@ -1,4 +1,4 @@
-El decorador @Injectable y la configuración providedIn: 'root' son utilizados para definir un servicio en Angular y especificar cómo y dónde debería ser proporcionado.
+/*El decorador @Injectable y la configuración providedIn: 'root' son utilizados para definir un servicio en Angular y especificar cómo y dónde debería ser proporcionado.
 
 Explicación de @Injectable y providedIn: 'root'
 @Injectable Decorator
@@ -121,4 +121,4 @@ html
   <ion-title>Header</ion-title>
 </ion-toolbar>
 Este componente se suscribe a hideMenu$ en ngOnInit, actualizando hideMenuButton según el valor emitido por el servicio.
-Si hideMenuButton es true, el botón del menú se oculta; si es false, el botón se muestra.
+Si hideMenuButton es true, el botón del menú se oculta; si es false, el botón se muestra. */
