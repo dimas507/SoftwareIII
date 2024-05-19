@@ -1,0 +1,124 @@
+El decorador @Injectable y la configuración providedIn: 'root' son utilizados para definir un servicio en Angular y especificar cómo y dónde debería ser proporcionado.
+
+Explicación de @Injectable y providedIn: 'root'
+@Injectable Decorator
+El decorador @Injectable marca una clase como disponible para ser inyectada en otras clases mediante el sistema de inyección de dependencias de Angular.
+ Esto significa que Angular puede crear una instancia de esta clase y proporcionar esa instancia a otras clases que la necesiten.
+
+providedIn: 'root'
+La opción providedIn: 'root' en el decorador @Injectable indica que el servicio debe ser registrado en el inyector de nivel raíz.
+ Esto significa que Angular creará una única instancia de este servicio (singleton) para toda la aplicación. Esta instancia estará disponible para inyección en cualquier parte de la aplicación.
+
+typescript
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MenuVisibilityService {
+  // ...
+}
+Con providedIn: 'root', no es necesario registrar el servicio en ningún módulo (providers array).
+Angular se encarga automáticamente de hacerlo cuando se encuentra el servicio en cualquier parte del código.
+
+Descripción del MenuVisibilityService
+Este servicio tiene las siguientes funcionalidades:
+
+Propiedades:
+
+private hideMenuSubject: Es un BehaviorSubject, que es un tipo especial de Observable que mantiene un valor actual y emite ese valor cada vez que hay una suscripción.
+hideMenu$: Es un Observable que expone los valores emitidos por hideMenuSubject. 
+Otros componentes pueden suscribirse a hideMenu$ para recibir actualizaciones sobre el estado del menú.
+private hiddenMenuRoutes: Un array de rutas donde el menú debería estar oculto.
+Constructor:
+
+constructor(private router: Router): El constructor inyecta el servicio Router de Angular. Esto permite que el servicio escuche eventos de navegación.
+this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => { this.checkRoute(); }): 
+Escucha los eventos de finalización de navegación (NavigationEnd). Cada vez que la navegación finaliza, se ejecuta el método checkRoute.
+
+Método checkRoute:
+
+Este método verifica la ruta actual (this.router.url).
+Comprueba si la ruta actual está en el array hiddenMenuRoutes.
+Emite el valor correspondiente (true o false) a través de hideMenuSubject.
+typescript
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MenuVisibilityService {
+  private hideMenuSubject = new BehaviorSubject<boolean>(false);
+  hideMenu$ = this.hideMenuSubject.asObservable();
+
+  // Lista de rutas donde el menú debe estar oculto
+  private hiddenMenuRoutes: string[] = ['/home'];
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkRoute();
+    });
+  }
+
+  private checkRoute() {
+    const currentRoute = this.router.url;
+    const shouldHideMenu = this.hiddenMenuRoutes.includes(currentRoute);
+    console.log(`Current route: ${currentRoute}, Hide menu: ${shouldHideMenu}`);
+    this.hideMenuSubject.next(shouldHideMenu);
+  }
+}
+¿Cómo Funciona en Conjunto?
+Inicialización:
+
+Cuando el servicio es inicializado, se suscribe a los eventos de navegación del Router.
+Navegación:
+
+Cada vez que la navegación termina (NavigationEnd), se ejecuta el método checkRoute.
+Verificación de Rutas:
+
+checkRoute verifica si la ruta actual está en la lista hiddenMenuRoutes.
+Si la ruta está en la lista, se emite true a través de hideMenuSubject.
+Si la ruta no está en la lista, se emite false.
+Componentes Suscriptores:
+
+Cualquier componente que esté suscrito a hideMenu$ recibirá actualizaciones sobre si el menú debe mostrarse u ocultarse.
+Por ejemplo, el HeaderComponent puede suscribirse a este observable para mostrar u ocultar el botón del menú.
+
+Ejemplo en HeaderComponent
+header.component.ts
+typescript
+
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { MenuVisibilityService } from '../services/menu-visibility.service';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule]
+})
+export class HeaderComponent implements OnInit {
+  hideMenuButton: boolean = false;
+
+  constructor(private menuVisibilityService: MenuVisibilityService) {}
+
+  ngOnInit() {
+    this.menuVisibilityService.hideMenu$.subscribe(hide => {
+      this.hideMenuButton = hide;
+    });
+  }
+}
+header.component.html
+html
+
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-button *ngIf="!hideMenuButton"></ion-menu-button> <!-- Botón del menú -->
+  </ion-buttons>
+  <ion-title>Header</ion-title>
+</ion-toolbar>
+Este componente se suscribe a hideMenu$ en ngOnInit, actualizando hideMenuButton según el valor emitido por el servicio.
+Si hideMenuButton es true, el botón del menú se oculta; si es false, el botón se muestra.
